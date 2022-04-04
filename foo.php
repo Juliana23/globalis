@@ -12,6 +12,10 @@ function foo($search_overlaps)
         return $search_overlaps;
     }
 
+    usort($search_overlaps, function ($first_element, $second_element) {
+        return $first_element[0] >= $second_element[0];
+    });
+
     $merged_overlaps[] = $search_overlaps[0];
 
     foreach ($search_overlaps as $i => $source) {
@@ -21,6 +25,10 @@ function foo($search_overlaps)
             $target = $merged_overlaps[$j];
             $overlaped = ($source[0] >= $target[0] && $source[0] <= $target[1]) 
                     || ($source[1] >= $target[0] && $source[1] <= $target[1]);
+                    var_dump(($source[0] >= $target[0] && $source[0] <= $target[1]) 
+                    || ($source[1] >= $target[0] && $source[1] <= $target[1]));
+                    var_dump($source);
+                    var_dump($target);
             $j++;
         }
         if ($overlaped) {
@@ -30,10 +38,6 @@ function foo($search_overlaps)
         }
     }
 
-    usort($merged_overlaps, function ($first_element, $second_element) {
-        return $first_element[0] >= $second_element[0];
-    });
-
     return $merged_overlaps;
 }
 
@@ -42,5 +46,8 @@ print_r(foo([[0, 5], [3, 10]]));
 print_r(foo([[0, 5], [2, 4]]));
 print_r(foo([[7, 8], [3, 6], [2, 4]]));
 print_r(foo([[3, 6], [3, 4], [15, 20], [16, 17], [1, 4], [6, 10], [3, 6]]));
+print_r(foo([[3, 6], [3, 4], [15, 20], [16, 17], [1, 4], [6, 15], [3, 6]]));
+
+  
 
 ?>
