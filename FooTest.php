@@ -9,7 +9,7 @@ final class FooTest extends TestCase
     /**
      * @dataProvider fooProvider
      */
-    public function testNoValuesChanged(array $input, array $expected): void
+    public function testFoo(array $input, array $expected): void
     {
         $this->assertSame($expected, foo($input));
     }
@@ -68,6 +68,20 @@ final class FooTest extends TestCase
             [
                 [1, 10],
                 [15, 20]
+            ]
+        ];
+        yield 'overlapsValuesNeedSort' => [
+            [
+                [3, 6],
+                [3, 4],
+                [15, 20],
+                [16, 17],
+                [1, 4],
+                [6, 15],
+                [3, 6]
+            ],
+            [
+                [1, 20]
             ]
         ];
     }
